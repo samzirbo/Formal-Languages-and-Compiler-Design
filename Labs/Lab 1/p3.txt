@@ -1,0 +1,14 @@
+# p3: Compute mean of list
+arr: list of int
+i, n, sum: int = 0
+>> n
+
+for i in {0:n} do
+	>> arr[i]
+end
+
+for i in arr do
+	sum += i
+end
+
+<< sum / arr.length
