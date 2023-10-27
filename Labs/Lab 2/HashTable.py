@@ -8,7 +8,6 @@ class HashTable:
         for c in str(key):
             total += ord(c)
         return total % self.size
-
         # return hash(key) % self.size
 
     def put(self, key):
@@ -49,15 +48,3 @@ class HashTable:
     
     def getSize(self):
         return self.size
-    
-
-if __name__ == '__main__':
-    # Example usage
-    ht = HashTable(5)
-    ht.put("Sam")
-    ht.put("Alex")
-    ht.put("Ema")
-    ht.put("Sam")
-    # ht.remove("Alex")
-    #
-    print(ht)
