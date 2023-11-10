@@ -8,7 +8,6 @@ class HashTable:
         for c in str(key):
             total += ord(c)
         return total % self.size
-        # return hash(key) % self.size
 
     def put(self, key):
         index = self._hash(key)

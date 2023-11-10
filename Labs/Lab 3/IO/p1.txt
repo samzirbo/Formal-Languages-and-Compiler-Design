@@ -6,7 +6,7 @@ a, b,c,max:int
 if(a> b)then
 	max=a
 else 
-	max=b
+	max= b
 end
 
 if(c >=max)then
