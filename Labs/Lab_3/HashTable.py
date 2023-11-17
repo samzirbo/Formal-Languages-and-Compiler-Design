@@ -8,7 +8,6 @@ class HashTable:
         for c in str(key):
             total += ord(c)
         return total % self.size
-        # return hash(key) % self.size
 
     def put(self, key):
         index = self._hash(key)
@@ -42,9 +41,10 @@ class HashTable:
     def __str__(self):
         table_str = ""
         for i in range(self.size):
-            cell_str = f"[{', '.join(self.table[i] if self.table[i] else '')}]"
-            table_str += f"   [{i}]: {cell_str}\n"
-        return "{\n" + table_str + "}"
+            if self.table[i] is not None:
+                for j in range(len(self.table[i])):
+                    table_str += f"({i}, {j}) {self.table[i][j]}\n"
+        return table_str
     
     def getSize(self):
         return self.size

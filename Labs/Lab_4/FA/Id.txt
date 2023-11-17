@@ -1,0 +1,7 @@
+q0
+q1
+q0,q1,abcdefghijklmnopqrstuvwxyz
+q0,q1,ABCDEFGHIJKLMNOPQRSTUVWXYZ
+q1,q1,abcdefghijklmnopqrstuvwxyz
+q1,q1,ABCDEFGHIJKLMNOPQRSTUVWXYZ
+q1,q1,0123456789
