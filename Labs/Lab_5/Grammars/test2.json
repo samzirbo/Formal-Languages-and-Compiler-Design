@@ -1,0 +1,18 @@
+{
+    "NonTerminals": ["S", "A", "B"],
+    "Terminals": ["a", "b"],
+    "Start": "S",
+    "Productions":{
+        "S": [
+            ["A","a", "A", "b"],
+            ["B", "b", "B", "a"]
+        ],
+        "A": [
+            ["ε"]
+        ],
+        "B": [
+            ["ε"]
+        ]
+    }
+        
+}

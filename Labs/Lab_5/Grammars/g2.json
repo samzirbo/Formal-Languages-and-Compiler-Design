@@ -1,0 +1,103 @@
+{
+    "NonTerminals": ["program", "statement_list", "statement", "expression", "term", "factor", "type", "primitive", "array_decl", "declaration", "ID_list", "assignment", "io", "if_stmt", "while_stmt", "for_stmt", "for_header", "condition", "relation"],
+    "Terminals": ["ID", "CONST", "int", "str", "list of", ":", ",", "=", ">>", "<<", "if", "(", ")", "do", "else", "end", "while", "for", "in", "{", "}", ":", "(", ")", ":", ":", "==", "!=", "<", "<=", ">", ">=", "+", "-", "*", "/", "%", "\\n", "[", "]"],
+    "Start": "program",
+    "Productions":{
+        "program": [
+            ["statement_list"]
+        ],
+        "statement_list": [
+            ["statement"],
+            ["statement", "\\n", "statement_list"]
+        ],
+        "statement": [
+            ["declaration"],
+            ["assignment"],
+            ["io"],
+            ["if_stmt"],
+            ["while_stmt"],
+            ["for_stmt"]
+        ],
+
+        "expression": [
+            ["term"],
+            ["term", "+", "expression"],
+            ["term", "-", "expression"]
+        ],
+        "term": [
+            ["factor"],
+            ["factor", "*", "term"],
+            ["factor", "/", "term"],
+            ["factor", "%", "term"]
+        ],
+        "factor": [
+            ["(", "expression", ")"],
+            ["ID"],
+            ["CONST"],
+            ["ID", "[", "expression", "]"]
+        ],
+
+        "type":[
+            ["primitive"],
+            ["array_decl"]
+        ],
+        "primitive": [
+            ["int"],
+            ["str"]
+        ],
+        "array_decl": [
+            ["list of", "primitive"]
+        ],
+
+        "declaration": [
+            ["ID", ":", "type"],
+            ["ID_list", ":", "type"]
+        ],
+        "ID_list": [
+            ["ID"],
+            ["ID", ",", "ID_list"]
+        ],
+
+        "assignment": [
+            ["ID", "=", "expression"]
+        ],
+
+        "io": [
+            [">>", "ID"],
+            ["<<", "expression"],
+            ["<<", "ID"],
+            ["<<", "CONST"]
+        ],
+
+        "if_stmt": [
+            ["if", "(", "condition", ")", "do", "statement_list", "end"],
+            ["if", "(", "condition", ")", "do", "statement_list", "else", "statement_list", "end"]
+        ],
+
+        "while_stmt": [
+            ["while", "(", "condition", ")", "do", "statement_list", "end"]
+        ],
+
+        "for_stmt": [
+            ["for", "for_header", "do", "statement_list", "end"]
+        ],
+        "for_header": [
+            ["ID", "in", "ID"],
+            ["ID", "in", "{", "expression", "}"],
+            ["ID", "in", "{", "expression", ":", "expression", "}"],
+            ["ID", "in", "{", "expression", ":", "expression", ":", "expression","}"]
+        ],
+
+        "condition": [
+            ["expression", "relation", "expression"]
+        ],
+        "relation": [
+            ["=="],
+            ["!="],
+            ["<"],
+            ["<="],
+            [">"],
+            [">="]
+        ]
+    }
+}

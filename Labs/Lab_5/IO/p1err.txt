@@ -1,0 +1,18 @@
+1a, b, c, max: int
+>> a
+>>b
+>>  c
+
+if (a> b) then
+	max =a
+else 
+	max= b
+end
+
+if (c >max) then
+	max = c
+end
+
+<<max
+
+|
