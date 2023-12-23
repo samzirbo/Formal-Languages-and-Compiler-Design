@@ -1,0 +1,117 @@
+{
+    "NonTerminals": ["program", "statement", "statement_optional", "assign_or_decl","expression", "optional_expression", "term", "optional_term","factor","optional_array[]", "type", "primitive", "array_decl", "declaration", "declaration_cont","assignment", "io", "if_stmt", "optional_else", "while_stmt", "for_stmt", "for_header", "for_header_continuation", "condition", "relation"],
+    "Terminals": ["ID", "CONST", "int", "str", "list", "of", ":", ",", "=", ">>", "<<", "if", "then", "(", ")", "do", "else", "end", "while", "for", "in", "{", "}", ":", "(", ")", ":", ":", "==", "!=", "<", "<=", ">", ">=", "+", "-", "*", "/", "%", "\\n", "[", "]"],
+    "Start": "program",
+    "Productions":{
+        "program": [
+            ["statement", "statement_optional"]
+        ],
+        "statement_optional": [
+            ["statement", "statement_optional"],
+            ["ε"]
+        ],
+        "statement": [
+            ["ID", "assign_or_decl"],
+            ["io"],
+            ["if_stmt"],
+            ["while_stmt"],
+            ["for_stmt"]
+        ],
+        "assign_or_decl": [
+            ["declaration"],
+            ["assignment"]
+        ],
+
+        "expression": [
+            ["term", "optional_expression"]
+        ],
+        "optional_expression": [
+            ["+", "term", "optional_expression"],
+            ["-", "term", "optional_expression"],
+            ["ε"]
+        ],
+        "term": [
+            ["factor", "optional_term"]
+        ],
+        "optional_term": [
+            ["*", "factor", "optional_term"],
+            ["/", "factor", "optional_term"],
+            ["%", "factor", "optional_term"],
+            ["ε"]
+        ],
+        "factor": [
+            ["CONST"],
+            ["(", "expression", ")"],
+            ["ID", "optional_array[]"]
+        ],
+        "optional_array[]": [
+            ["[", "expression", "]"],
+            ["ε"]
+        ],
+
+        "type":[
+            ["primitive"],
+            ["array_decl"]
+        ],
+        "primitive": [
+            ["int"],
+            ["str"]
+        ],
+        "array_decl": [
+            ["list", "of", "primitive"]
+        ],
+
+        "declaration": [
+            [",", "declaration_cont"],
+            [":", "type"]
+        ],
+        "declaration_cont": [
+            ["ID", "declaration"]
+        ],
+
+        "assignment": [
+            ["=", "expression"]
+        ],
+
+        "io": [
+            [">>", "ID", "optional_array[]"],
+            ["<<", "expression"]
+        ],
+
+        "if_stmt": [
+            ["if", "(", "condition", ")", "then", "program", "optional_else"]
+        ],
+        "optional_else": [
+            ["end"],
+            ["else", "program", "end"]
+        ],
+
+        "while_stmt": [
+            ["while", "(", "condition", ")", "do", "program", "end"]
+        ],
+
+        "for_stmt": [
+            ["for", "for_header", "do", "program", "end"]
+        ],
+        "for_header":
+        [
+            ["ID", "in", "for_header_continuation"]
+        ],
+        "for_header_continuation": [
+            ["ID"],
+            ["{", "expression", "}"]
+        ],
+
+        "condition": [
+            ["expression", "relation", "expression"]
+        ],
+        "relation": [
+            ["=="],
+            ["!="],
+            ["<"],
+            ["<="],
+            [">"],
+            [">="]
+        ]
+    }
+}

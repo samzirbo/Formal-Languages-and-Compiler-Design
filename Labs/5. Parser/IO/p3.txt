@@ -3,12 +3,12 @@ i,n,sum:int
 sum= 0
 >>n
 
-for i in {0 :n} do
+for i in {n} do
 	>>arr[i]
 end
 
 for i in arr do
-	sum= sum+i
+	sum= sum+ i
 end
 
  <<"Mean"<< sum/n

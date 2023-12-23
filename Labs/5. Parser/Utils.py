@@ -14,7 +14,6 @@ class Scanner:
             # Create list of tokens read from file but sorted by length descending
             with open(path, 'r') as f:
                 list = f.read().splitlines()
-                list.sort(key=len, reverse=True)
                 return list  
 
         # Read tokens from files
@@ -42,7 +41,7 @@ class Scanner:
             # Add spaces around unary operators that must be followed by an identifier or constant
             line = re.sub(rf"^\s*({re.escape(operator)})\s*([a-z0-9\"-]+)", r'\1 \2', line, re.IGNORECASE)
 
-        return line.split()  
+        return line.split()
     
     def classify(self, token):
         if token in self.reserved_words:
@@ -52,9 +51,9 @@ class Scanner:
         elif token in self.separators:
             return 'sep'
         elif self.isConstant(token):
-            return 'con'
+            return 'CONST'
         elif self.isIdentifier(token):
-            return 'id'
+            return 'ID'
         else:
             return 'error'  
 
@@ -67,18 +66,19 @@ class Scanner:
         4. Add the token to the ST if it is an identifier or constant
         5. Print an error message if the token is invalid
         """
+        self.errors = []
+
         with open(self.path, 'r') as f:
             dict = {'token':[], 'type':[]}
             lines = f.readlines()
             for i, line in enumerate(lines):
-                tokens = line.split()
                 tokens = self.tokenize(line)
                 for token in tokens:
                     type = self.classify(token)
                     dict['token'].append(token)
                     dict['type'].append(type)
-                    if type in ['id', 'con']:
-                        if type == 'id':
+                    if type in ['ID', 'CONST']:
+                        if type == 'ID':
                             pos = self.__sti.getPosition(token)
                         else:
                             pos = self.__stc.getPosition(token)
@@ -86,13 +86,24 @@ class Scanner:
                     elif type in ['res', 'op', 'sep']:
                         self.__pif.append((token, -1))
                     else:
-                        print(f"\033[91mLine {i + 1}: Lexical error: Invalid token {token}\033[0m")
+                        # print(f"\033[91mLine {i + 1}: Lexical error: Invalid token {token}\033[0m")
+                        self.errors.append(f"Line {i + 1}: Lexical error: Invalid token {token}")
                 # print(f"Line {i + 1}: {tokens}")
             self.tokens = pd.DataFrame(dict)
 
+            if self.errors:
+                return "Errors", self.errors
+            return "Tokens", [token  for token, pos in self.__pif.getElements()]
+
     def save(self):
-        # Save PIF and ST to files in the same directory as the source file
         source = "".join(self.path.split('.')[:-1])
+        if self.errors:
+            with open(source + "_PIF.out", 'w') as f:
+                for error in self.errors:
+                    f.write(f"{error}\n")
+            return
+
+        # Save PIF and ST to files in the same directory as the source file
         with open(source + "_PIF.out", 'w') as f:
             for token, pos in self.__pif.getElements():
                 f.write(f"{token} {pos}\n")
@@ -226,7 +237,7 @@ class HashTable:
         table_str = ""
         for i in range(self.size):
             if self.table[i] is not None:
-                for j in range(len(self.table[i])):
+                for j, _ in enumerate(self.table[i]):
                     table_str += f"({i}, {j}) {self.table[i][j]}\n"
         return table_str
     
