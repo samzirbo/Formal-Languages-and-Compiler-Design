@@ -1,0 +1,76 @@
+%{
+#include <math.h> 
+%}
+%option noyywrap
+
+INT     0|[-]?[1-9][0-9]*
+STR     [\"][a-z]+[\"]
+ID      [a-z][a-z0-9]*
+
+%%
+
+{INT}       {printf("Constant: %s\n", yytext);}
+{STR}       {printf("Constant: %s\n", yytext);}
+
+"int"            {printf("Reserved word: %s\n", yytext);}
+"str"            {printf("Reserved word: %s\n", yytext);}
+"list"           {printf("Reserved word: %s\n", yytext);}
+"of"             {printf("Reserved word: %s\n", yytext);}
+"if"             {printf("Reserved word: %s\n", yytext);}
+"then"           {printf("Reserved word: %s\n", yytext);}
+"else"           {printf("Reserved word: %s\n", yytext);}
+"while"          {printf("Reserved word: %s\n", yytext);}
+"for"            {printf("Reserved word: %s\n", yytext);}
+"in"             {printf("Reserved word: %s\n", yytext);}
+"not"            {printf("Reserved word: %s\n", yytext);}
+"do"             {printf("Reserved word: %s\n", yytext);}
+"end"            {printf("Reserved word: %s\n", yytext);}
+"and"            {printf("Reserved word: %s\n", yytext);}
+"or"             {printf("Reserved word: %s\n", yytext);}
+
+
+"+"     {printf("Operator: %s\n", yytext);}
+"-"     {printf("Operator: %s\n", yytext);}
+"*"     {printf("Operator: %s\n", yytext);}
+"/"     {printf("Operator: %s\n", yytext);}
+"%"     {printf("Operator: %s\n", yytext);}
+"="     {printf("Operator: %s\n", yytext);}
+"<"     {printf("Operator: %s\n", yytext);}
+"<="    {printf("Operator: %s\n", yytext);}
+">"     {printf("Operator: %s\n", yytext);}
+">="    {printf("Operator: %s\n", yytext);}
+"=="    {printf("Operator: %s\n", yytext);}
+"!="    {printf("Operator: %s\n", yytext);}
+"<<"    {printf("Operator: %s\n", yytext);}
+">>"    {printf("Operator: %s\n", yytext);}
+
+
+"("     {printf("Separator: %s\n", yytext);}
+")"     {printf("Separator: %s\n", yytext);}
+"."     {printf("Separator: %s\n", yytext);}
+","     {printf("Separator: %s\n", yytext);}
+":"     {printf("Separator: %s\n", yytext);}
+"{"     {printf("Separator: %s\n", yytext);}
+"}"     {printf("Separator: %s\n", yytext);}
+"["     {printf("Separator: %s\n", yytext);}
+"]"     {printf("Separator: %s\n", yytext);}
+
+{ID}        {printf("Identifier: %s\n", yytext);}
+
+[ \t\n]+	    {}
+
+. {printf("Lexical Error: \"%s\"\n", yytext);}
+
+%% 
+
+main( argc, argv ) 
+int argc; 
+char **argv; 
+{ 
+    ++argv, --argc; /* skip over program name */ 
+    if ( argc > 0 ) 
+        yyin = fopen( argv[0], "r" ); 
+    else 
+        yyin = stdin; 
+    yylex(); 
+} 

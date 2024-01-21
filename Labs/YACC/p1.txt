@@ -1,0 +1,13 @@
+a, b, c, max: int
+>> a
+a, b, c, max: int
+>> a
+>> b
+>> c
+
+if (a > b) then
+	max = a
+else 
+	max = b
+end
+
